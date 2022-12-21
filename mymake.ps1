@@ -1,4 +1,7 @@
-﻿param(
+# couldn't figure out how to use cmake, so this script just recompiles the newly modified c++ files for my opengl project 
+# and then links all the object files together to create an executable file. Saves the time of recompling everything when i use g++ *.h *cpp
+
+param(
 [parameter(Mandatory, HelpMessage="Enter an output file : ")]
 $filename
 )
