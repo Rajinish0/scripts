@@ -1,3 +1,4 @@
+## GCD OF TWO NUMS
 ## tried extrapolating my knowledge of recursion to scripts
 ## if a function can call itself, so can a script probably.
 ## and this works alright
