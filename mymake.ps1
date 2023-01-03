@@ -18,9 +18,26 @@ else {
 
 Get-Date > .\log.txt
 
+$arr = @()
+
+gci "." | where {( ($_.Extension -eq ".h") -and ($_.LastWriteTime -gt $lastDate) )} | % {$arr += $_.Name}
+
+function myfunc(){
+param([String] $s) 
+foreach ($i in $arr){
+    if ($s.Contains($i)){
+    return $true
+    }
+}
+return $false
+}
+
+
 #recompiling
-gci "." | where {( ($_.Extension -eq ".cpp") -and ($_.LastWriteTime -gt $lastDate) )} | % {g++ -c $_}
+gci "." | where {( ($_.Extension -eq ".cpp") -and ($_.LastWriteTime -gt $lastDate) ) -or (myfunc([string] $(cat $_.Name))) } | % {g++ -c $_}
 
 #linking 
 g++ *.o glad.c -lglfw3 -lopengl32 -lgdi32 -o $filename
+
+
 
