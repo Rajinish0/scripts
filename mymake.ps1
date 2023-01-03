@@ -29,9 +29,9 @@ $arr
 echo "done"
 
 function myfunc(){
-param($s) 
+param([string] $s) 
 foreach ($i in $arr){
-    if ($s.Contains("#include `"$i`"")){
+    if ($s.Contains($i)){
     return $true
     }
 }
@@ -42,14 +42,10 @@ return $false
 
 Write-Host "compiling altered files.."
 #recompiling
-gci "." | where { ($_.Extension -eq ".cpp") -and ( ($_.LastWriteTime -gt $lastDate) -or ( $(myfunc(cat $_.Name)) ) ) } | % {g++ -c $_}
+gci "." | where { ($_.Extension -eq ".cpp") -and ( ($_.LastWriteTime -gt $lastDate) -or ( $(myfunc([string] $(cat $_.Name))) ) ) } | % {g++ -c $_}
 Write-Host "done"
 
 Write-Host "linking"
 #linking 
 g++ *.o glad.c -lglfw3 -lopengl32 -lgdi32 -o $filename
-
-
-
-
 
